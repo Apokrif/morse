@@ -1,7 +1,10 @@
 package ganga.app;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
+import android.widget.Toast;
 
 public class Application extends android.app.Application {
 	/**
@@ -12,14 +15,19 @@ public class Application extends android.app.Application {
 	 */
 	public static Context context;
 	public static LoggingService loggingService;
+	public static final String TAG = "Morse Code Application";
+		
 	@Override
 	public final void onCreate() {
 		super.onCreate();
 
 		context = getApplicationContext();
-		context.startService(new Intent(context, LoggingService.class));
+		ComponentName service = context.startService(new Intent(context, LoggingService.class));
+		if (null==service){
+			Log.e(TAG, "Could not start logging service.");
+		}
 		//loggingService = 
-	}
+	}//onCreate
 
 	/**
 	 * Can be called when the application object is terminated. Note that there
@@ -33,6 +41,16 @@ public class Application extends android.app.Application {
 	@Override
 	public final void onTerminate() {
 		super.onTerminate();
+	}
+
+	/**
+	 * Show message by pop-up toast for a short period of time.
+	 * 
+	 * @param message
+	 *            what to show
+	 */
+	public void showToast(String message) {
+		Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
 	}
 
 }

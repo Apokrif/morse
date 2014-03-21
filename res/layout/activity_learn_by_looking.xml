@@ -22,6 +22,12 @@
         android:textSize="50sp"
         android:textStyle="bold" />
 
+    <com.mopub.mobileads.MoPubView
+    android:id="@+id/adview"
+    android:layout_width="fill_parent"
+    android:layout_height="50dp"
+    />
+    
     <!--
          This FrameLayout insets its children based on system windows using
          android:fitsSystemWindows.

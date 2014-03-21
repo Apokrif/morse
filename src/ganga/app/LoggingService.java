@@ -29,14 +29,5 @@ public class LoggingService extends Service {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	/**
-	 * Show message by pop-up toast for a short period of time.
-	 * 
-	 * @param message
-	 *            what to show
-	 */
-	public void showToast(String message) {
-		Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-	}
 
 }
