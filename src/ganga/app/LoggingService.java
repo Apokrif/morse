@@ -12,12 +12,11 @@ package ganga.app;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
-import android.widget.Toast;
 
 /**
  * This service can manifest inner events 
- * @author Apocrypha
  *
+ * @author Apocrypha
  */
 public class LoggingService extends Service {
 
@@ -29,5 +28,6 @@ public class LoggingService extends Service {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	// Из памяти, как груз отныне лишний,
+	// Исчезли тени песен и страстей. ﻿
 }

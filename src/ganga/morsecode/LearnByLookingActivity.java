@@ -1,34 +1,24 @@
 package ganga.morsecode;
 
-import java.io.IOException;
-
-import org.apache.http.HttpRequest;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.mopub.mobileads.MoPubErrorCode;
-import com.mopub.mobileads.MoPubView;
-import com.mopub.mobileads.MoPubView.BannerAdListener;
-
-import ganga.app.Application;
-import ganga.app.PostTask;
-import ganga.morsecode.util.SystemUiHider;
-
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
+
+
+
+import com.unilead.ErrorCode;
+import com.unilead.UnileadView;
+import com.unilead.UnileadView.BannerAdListener;
+
+import org.unilead.AdComponent;
+
+import ganga.morsecode.util.SystemUiHider;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -67,13 +57,15 @@ public class LearnByLookingActivity extends Activity implements
 	 */
 	private SystemUiHider mSystemUiHider;
 
-	// Declare an instance variable for your MoPubView.
-	private MoPubView moPubView;
+	// Declare an instance variable for your Unilead View.
+	private UnileadView adView;
+	//private AdComponent adComponent;
+	//private MoPubView moPubView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		context = this;
 
 		setContentView(R.layout.activity_learn_by_looking);
@@ -85,8 +77,9 @@ public class LearnByLookingActivity extends Activity implements
 		// while interacting with the UI.
 		findViewById(R.id.dummy_button).setOnTouchListener(
 				mDelayHideTouchListener);
-		
-		setupMoPubView();
+
+		//setupMoPubView();
+		setupAdView();
 	}
 
 	@Override
@@ -100,7 +93,8 @@ public class LearnByLookingActivity extends Activity implements
 	}
 
 	protected void onDestroy() {
-		moPubView.destroy();
+		//moPubView.destroy();
+		adView.destroy();
 		super.onDestroy();
 	}
 
@@ -114,9 +108,9 @@ public class LearnByLookingActivity extends Activity implements
 		public boolean onTouch(View view, MotionEvent motionEvent) {
 			Toast.makeText(context, "onTouch", Toast.LENGTH_SHORT).show();
 			try {
-				postToServer();
+				//adComponent.postBidRequest();
+				adView.loadAd();
 			} catch (Exception e) {
-				// TODO JSONException catch block
 				e.printStackTrace();
 			}
 
@@ -142,15 +136,6 @@ public class LearnByLookingActivity extends Activity implements
 	private void delayedHide(int delayMillis) {
 		mHideHandler.removeCallbacks(mHideRunnable);
 		mHideHandler.postDelayed(mHideRunnable, delayMillis);
-	}
-
-	private PostTask postTask = null;
-	protected void postToServer() //throws JSONException, ClientProtocolException, IOException 
-	{
-		postTask = new PostTask();
-		AsyncTask.Status status = postTask.getStatus();
-		//if (postTask.getStatus().equals(AsyncTask.Status.FINISHED))
-		postTask.execute();
 	}
 
 	/*
@@ -218,43 +203,52 @@ public class LearnByLookingActivity extends Activity implements
 
 	}
 
-
 	/*
 	 * Initialize Ad slot
 	 */
-	private void setupMoPubView(){
+	/*
+	private void setupMoPubView() {
 		moPubView = (MoPubView) findViewById(R.id.adview);
 		moPubView.setAdUnitId("42310825a9d549739cf54cab8b4b9aea");
 		moPubView.loadAd();
 		moPubView.setBannerAdListener(this);
-	}//setupMoPubView
-	
+	}// setupMoPubView
+*/
+	private void setupAdView() {
+		//adComponent = new AdComponent();
+		//adComponent.initialize();
+		adView = (UnileadView) findViewById(R.id.adview);
+		adView.initialize("idString");
+		adView.loadAd();
+		
+	}
+
 	@Override
-	public void onBannerClicked(MoPubView arg0) {
+	public void onBannerClicked(UnileadView arg0) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void onBannerCollapsed(MoPubView arg0) {
+	public void onBannerCollapsed(UnileadView arg0) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void onBannerExpanded(MoPubView arg0) {
+	public void onBannerExpanded(UnileadView arg0) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void onBannerFailed(MoPubView arg0, MoPubErrorCode arg1) {
+	public void onBannerFailed(UnileadView arg0, ErrorCode arg1) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void onBannerLoaded(MoPubView arg0) {
+	public void onBannerLoaded(UnileadView arg0) {
 		// TODO Auto-generated method stub
 
 	}

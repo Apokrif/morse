@@ -8,9 +8,8 @@
     <!--
          The primary full-screen view. This can be replaced with whatever view
          is needed to present your content, e.g. VideoView, SurfaceView,
-         TextureView, etc.
-    -->
-
+         TextureView, etc.-->
+         
     <TextView
         android:id="@+id/fullscreen_content"
         android:layout_width="match_parent"
@@ -22,12 +21,11 @@
         android:textSize="50sp"
         android:textStyle="bold" />
 
-    <com.mopub.mobileads.MoPubView
-    android:id="@+id/adview"
-    android:layout_width="fill_parent"
-    android:layout_height="50dp"
-    />
-    
+    <com.unilead.UnileadView
+        android:id="@+id/adview"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp" />
+
     <!--
          This FrameLayout insets its children based on system windows using
          android:fitsSystemWindows.
