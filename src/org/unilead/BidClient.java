@@ -57,6 +57,7 @@ public class BidClient {
 	public void shutdownHttpClient() {
 		if (httpClient == null)
 			return;
+		
 		ClientConnectionManager manager = httpClient.getConnectionManager();
 		if (manager != null) {
 			manager.shutdown();
@@ -67,9 +68,9 @@ public class BidClient {
 	// TODO: Compare to HttpURLConnection.
 	// http://android-developers.blogspot.ru/2011/09/androids-http-clients.html
 	// https://github.com/square/okhttp
-	DefaultHttpClient httpClient;
+	private DefaultHttpClient httpClient;
 	/** 
-	 * build Bid Request Object To Send
+	 * Build BidRequest Object to Send
 	 * @return
 	 * @throws JSONException
 	 */
@@ -82,7 +83,7 @@ public class BidClient {
 	/**
 	 * Get Response from Bid Sever
 	 * @param requestJson
-	 * @return
+	 * @return HttpResponse
 	 * @throws UnsupportedEncodingException
 	 * @throws IOException
 	 * @throws ClientProtocolException
@@ -94,7 +95,7 @@ public class BidClient {
 		HttpParams httpParams = new BasicHttpParams();
 		HttpConnectionParams.setConnectionTimeout(httpParams, TIMEOUT_MILLISEC);
 		HttpConnectionParams.setSoTimeout(httpParams, TIMEOUT_MILLISEC);
-	httpClient = new DefaultHttpClient(); // using Apache HTTP Client
+	    httpClient = new DefaultHttpClient(); // using Apache HTTP Client
 		/**
 		 * The HTTP POST method is defined in section 9.5 of RFC2616:
 		 * 
@@ -128,7 +129,7 @@ public class BidClient {
 	}
 
 	/**
-	 * parse Response
+	 * parse Response as Bid
 	 * @param response
 	 * @return
 	 * @throws IOException
@@ -150,6 +151,7 @@ public class BidClient {
 				inputStream.close();
 			}
 		} catch (Exception e) {
+			Log.e("ganga", e.getMessage(), e);
 		}
 		Log.d("ganga", sb.toString());
 		JSONObject responseJson = new JSONObject(sb.toString());
@@ -161,5 +163,5 @@ public class BidClient {
 		resultBid.nurl = bid.getString("nurl");
 		resultBid.iurl = bid.getString("iurl");
 		return resultBid;
-	}
+	}//parse
 }
